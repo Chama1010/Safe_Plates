@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-4">
+    <h2>My Allergen Preferences</h2>
+    <form method="POST">
+        <div class="allergen-grid mt-3 mb-3">
+            {% set total = allergen_list | length %}
+            {% set rows = 10 %}
+            {% set cols = (total // rows) + (1 if total % rows > 0 else 0) %}
+            {% for row in range(rows) %}
+                {% for col in range(cols) %}
+                    {% set idx = col * rows + row %}
+                    {% if idx < total %}
+                        {% set allergen = allergen_list[idx] %}
+                        <label class="allergen-item form-check">
+                            <input class="form-check-input"
+                                   type="checkbox"
+                                   name="allergens"
+                                   value="{{ allergen }}"
+                                   id="{{ allergen }}"
+                                   {% if allergen in user_allergens %}checked{% endif %}>
+                            <span class="form-check-label" for="{{ allergen }}">{{ allergen }}</span>
+                        </label>
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">Save Preferences</button>
+    </form>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+

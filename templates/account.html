@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container" style="background-color: #f0f2f5; padding: 30px; border-radius: 12px;">
+  <div class="card shadow-sm p-4" style="border-radius: 16px; background-color: #ffffff;">
+    <h2 class="mb-4 text-center" style="color: #2c3e50;">My Account</h2>
+
+    <div class="mb-4">
+      <label class="form-label fw-semibold" style="color: #2c3e50;">Username</label>
+      <div class="text-muted" style="font-size: 1rem;">{{ username }}</div>
+    </div>
+
+
+    <div class="mb-4">
+      <label class="form-label fw-semibold" style="color: #2c3e50;">Email</label>
+      <div class="text-muted" style="font-size: 1rem;">{{ email }}</div>
+    </div>
+
+    <div class="mb-4">
+      <label class="form-label fw-semibold" style="color: #2c3e50;">Allergy Preferences</label>
+      {% if preferences %}
+        <ul class="list-group">
+          {% for pref in preferences %}
+            <li class="list-group-item border-0 mb-1" style="background-color: #eaf2f8; color: #2c3e50; border-radius: 6px;">
+              {{ pref.Allergen }}
+            </li>
+          {% endfor %}
+        </ul>
+      {% else %}
+        <div class="text-muted" style="font-size: 1rem;">No allergy preferences are set.</div>
+      {% endif %}
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="{{ url_for('main.manage_allergens') }}" class="btn btn-primary px-4 py-2" 
+         style="border-radius: 8px; background-color: #3498db; border: none;">
+        Manage Allergies
+      </a>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

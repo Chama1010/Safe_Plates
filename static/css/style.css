@@ -1,0 +1,146 @@
+.body {
+  font-family: 'Open Sans', sans-serif;
+  background-color: #f8f9fa;
+  padding-top: 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.h1 {
+  color: #2c3e50;
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.card {
+  transition: transform 0.3s;
+  height: 100%;
+}
+
+.card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+}
+
+.card-img-top {
+  height: 200px;
+  object-fit: cover;
+}
+
+.card-title {
+  font-weight: 600;
+  color: #34495e;
+}
+
+.form-control:focus {
+  border-color: #6c757d;
+  box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25);
+}
+
+.btn-primary {
+  background-color: #3498db;
+  border-color: #3498db;
+}
+
+.btn-primary:hover {
+  background-color: #2980b9;
+  border-color: #2980b9;
+}
+
+.alert {
+  border-radius: 4px;
+}
+
+/* Login and Registration Forms */
+.auth-form {
+  max-width: 450px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
+}
+
+.auth-form h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  color: #2c3e50;
+}
+
+/* Flash messages */
+.flash-messages {
+  margin-bottom: 20px;
+}
+
+/*show more button*/
+.card-text .btn-link {
+  font-size: 0.85rem;
+  color: #3498db;
+  text-decoration: none;
+}
+
+.card-text .btn-link:hover {
+  text-decoration: underline;
+}
+
+.ingredient-text {
+  display: inline;
+}
+
+/* Flash message animation */
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { opacity: 0; display: none; }
+}
+
+.flash-messages .alert {
+  animation: fadeOut 2s ease forwards;
+}
+
+/* Allergen Grid Styling */
+.allergen-grid {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 10px;
+  max-width: 100%;
+  font-size: 14px;
+}
+
+.allergen-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+}
+
+/* Custom Navbar Styling */
+.custom-navbar {
+  background-color: #4e3d76e4;
+}
+
+.custom-navbar .navbar-brand,
+.custom-navbar .nav-link {
+  color: #ffffff !important;
+}
+
+.custom-navbar .nav-link:hover {
+  color: #e0e0e0 !important;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
