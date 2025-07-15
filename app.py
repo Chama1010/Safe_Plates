@@ -8,7 +8,9 @@ from dotenv import load_dotenv
 load_dotenv()
 
 def create_app():
-    app = Flask(__name__)
+    # app = Flask(__name__)
+    app = Flask(__name__, template_folder='templates', static_folder='static')
+
     
     # Debug environment variables
     db_url = os.getenv('DATABASE_URL')

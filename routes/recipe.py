@@ -157,10 +157,12 @@ def unsave_recipe(recipe_id):
             db.session.commit()
             return jsonify({'success': True})
         else:
-            app.logger.warning(f"SavedRecipe not found: user={current_user.UserId}, recipe={recipe_id}")
+            # app.logger.warning(f"SavedRecipe not found: user={current_user.UserId}, recipe={recipe_id}")
+            logger.warning(f"SavedRecipe not found: user={current_user.UserId}, recipe={recipe_id}")
             return jsonify({'success': False, 'message': 'Recipe not found'}), 404
     except Exception as e:
-        app.logger.error(f"Error unsaving recipe: {e}")
+        # app.logger.error(f"Error unsaving recipe: {e}")
+        logger.error(f"Error unsaving recipe: {e}")
         db.session.rollback()
         return jsonify({'success': False, 'message': f'Server error: {str(e)}'}), 500
 
