@@ -54,6 +54,10 @@ def index():
                 headers = {'User-Agent': 'AllergyFreeRecipeFinder/1.0'}
                 response = requests.get(url, params=params, headers=headers, timeout=30)
 
+                # # remove this after the error of not showing recipes
+                # print("Response status code:", response.status_code)
+                # print("Response JSON:", response.json())
+
                 if response.status_code == 404:
                     url = "https://api.edamam.com/api/recipes/v2"
                     headers['Edamam-Account-User'] = 'b265e1fa' 
