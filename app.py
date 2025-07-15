@@ -3,6 +3,8 @@ from flask_login import LoginManager
 from my_extensions import db
 import os
 from dotenv import load_dotenv
+from flask_migrate import Migrate
+
 
 # Load environment variables 
 load_dotenv()
@@ -35,6 +37,9 @@ def create_app():
     
     # Initialize extensions
     db.init_app(app)
+
+    # Initialize migrate
+    migrate = Migrate(app, db)
     
     # Setup login manager
     login_manager = LoginManager()
