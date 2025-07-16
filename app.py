@@ -6,15 +6,11 @@ from dotenv import load_dotenv
 from flask_migrate import Migrate
 
 
-# updated with the second code 
-# load_dotenv()
-from dotenv import load_dotenv
-dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
-load_dotenv(dotenv_path)
+load_dotenv()
 
 def create_app():
-    # app = Flask(__name__)
-    app = Flask(__name__, template_folder='templates', static_folder='static')
+    app = Flask(__name__)
+    # app = Flask(__name__, template_folder='templates', static_folder='static')
 
     
     # Debug environment variables
@@ -68,9 +64,6 @@ def create_app():
     # Create tables
     with app.app_context():
         db.create_all()
-    
-    #remove this if db connect
-    print("SQLAlchemy URI in use:", app.config['SQLALCHEMY_DATABASE_URI'])
 
     return app
 

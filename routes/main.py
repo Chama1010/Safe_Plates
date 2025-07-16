@@ -1,12 +1,10 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from flask_login import login_required, current_user
 from my_extensions import db
 from models.models import Preferences
-import os
+
 
 main_bp = Blueprint('main', __name__)
-
-
 
 @main_bp.route('/dashboard')
 @login_required
@@ -63,12 +61,3 @@ def account():
     
     return render_template('account.html', email=current_user.Email, username=current_user.Name, preferences=preferences)
 
-#remove this if db connect succesfully 
-@main_bp.route('/debug-env')
-def debug_env():
-    return jsonify({
-        'DATABASE_URL': os.getenv('DATABASE_URL'),
-        'SECRET_KEY': os.getenv('SECRET_KEY'),
-        'EDAMAM_APP_ID': os.getenv('EDAMAM_APP_ID'),
-        'EDAMAM_APP_KEY': os.getenv('EDAMAM_APP_KEY')
-    })
