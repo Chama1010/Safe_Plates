@@ -6,8 +6,11 @@ from dotenv import load_dotenv
 from flask_migrate import Migrate
 
 
-# Load environment variables 
-load_dotenv()
+# updated with the second code 
+# load_dotenv()
+from dotenv import load_dotenv
+dotenv_path = os.path.join(os.path.dirname(__file__), '.env')
+load_dotenv(dotenv_path)
 
 def create_app():
     # app = Flask(__name__)
