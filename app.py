@@ -66,6 +66,9 @@ def create_app():
     with app.app_context():
         db.create_all()
     
+    #remove this if db connect
+    print("SQLAlchemy URI in use:", app.config['SQLALCHEMY_DATABASE_URI'])
+
     return app
 
 
