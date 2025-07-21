@@ -1,59 +1,63 @@
 {% extends "base.html" %}
 
 {% block content %}
+<!-- Container for saved recipes page -->
 <div class="container" style="background-color: #f0f2f5; padding: 30px; border-radius: 12px;">
   <h2 class="mb-4 text-center" style="color: #2c3e50;">My Saved Recipes</h2>
 
   {% if recipes %}
+    <!-- Grid layout for displaying saved recipes -->
     <div class="row row-cols-1 row-cols-md-3 g-4">
       {% for r in recipes %}
         <div class="col">
           <div class="card h-100 shadow-sm" style="border-radius: 16px;">
+            
+            <!-- Show image if available, else fallback image -->
             {% if r.ImageUrl %}
               <img src="{{ r.ImageUrl }}" class="card-img-top" alt="{{ r.Title }}">
             {% else %}
               <img src="{{ url_for('static', filename='img/placeholder.png') }}" class="card-img-top" alt="No image available">
             {% endif %}
+
             <div class="card-body d-flex flex-column">
+              <!-- Recipe title -->
               <h5 class="card-title" style="color: #34495e;">{{ r.Title }}</h5>
 
+              <!-- Ingredients preview with tooltip on hover -->
               <p class="card-text ingredient-paragraph" title="{{ r.Ingredients }}">
                 {{ r.Ingredients }}
               </p>
 
+              <!-- Link to full recipe -->
               {% if r.RecipeUrl %}
                 <a href="{{ r.RecipeUrl }}" class="btn btn-sm btn-outline-primary mt-auto" target="_blank" rel="noopener noreferrer">
                   View Full Recipe
                 </a>
               {% endif %}
 
-              <!-- Unsave Button -->
+              <!-- Button to unsave recipe -->
               <button 
                 class="btn btn-sm btn-danger unsave-btn mt-2"
                 data-recipe-id="{{ r.RecipeId }}"
                 type="button"> 
                 Remove
               </button>
-
             </div>
           </div>
         </div>
       {% endfor %}
     </div>
   {% else %}
+    <!-- Message when no recipes are saved -->
     <div class="alert alert-info text-center mt-4">You haven't saved any recipes yet.</div>
   {% endif %}
 </div>
 {% endblock %}
 
+<!-- Include JavaScript for unsave functionality -->
 {% block scripts %}
   <script src="{{ url_for('static', filename='script.js') }}"></script>
 {% endblock %}
-
-
-
-
-
 
 
 

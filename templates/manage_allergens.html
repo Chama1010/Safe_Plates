@@ -1,17 +1,25 @@
 {% extends "base.html" %}
+
 {% block content %}
+<!-- Page to manage allergen preferences -->
 <div class="container mt-4">
     <h2>My Allergen Preferences</h2>
+
+    <!-- Form for submitting selected allergens -->
     <form method="POST">
         <div class="allergen-grid mt-3 mb-3">
             {% set total = allergen_list | length %}
             {% set rows = 10 %}
             {% set cols = (total // rows) + (1 if total % rows > 0 else 0) %}
+
+            <!-- Display allergens in grid format -->
             {% for row in range(rows) %}
                 {% for col in range(cols) %}
                     {% set idx = col * rows + row %}
                     {% if idx < total %}
                         {% set allergen = allergen_list[idx] %}
+                        
+                        <!-- Checkbox for each allergen -->
                         <label class="allergen-item form-check">
                             <input class="form-check-input"
                                    type="checkbox"
@@ -25,19 +33,12 @@
                 {% endfor %}
             {% endfor %}
         </div>
+
+        <!-- Submit button to save selections -->
         <button type="submit" class="btn btn-primary mt-3">Save Preferences</button>
     </form>
 </div>
 {% endblock %}
-
-
-
-
-
-
-
-
-
 
 
 

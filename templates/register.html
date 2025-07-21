@@ -1,13 +1,16 @@
 {% extends "base.html" %}
 
 {% block content %}
+<!-- Registration form container -->
 <div class="row justify-content-center">
     <div class="col-md-6 col-lg-5">
         <h2 class="mb-4 text-center">Create a New Account</h2>
 
+        <!-- Registration form -->
         <form method="POST" action="{{ url_for('auth.register') }}">
             {{ form.hidden_tag() }}
 
+            <!-- Name field -->
             <div class="mb-3">
                 <label for="name" class="form-label">Full Name</label>
                 <input 
@@ -21,6 +24,7 @@
                 >
             </div>
 
+            <!-- Email field -->
             <div class="mb-3">
                 <label for="email" class="form-label">Email address</label>
                 <input 
@@ -34,6 +38,7 @@
                 >
             </div>
 
+            <!-- Password field -->
             <div class="mb-3">
                 <label for="password" class="form-label">Password</label>
                 <input 
@@ -46,6 +51,7 @@
                 >
             </div>
 
+            <!-- Confirm password field -->
             <div class="mb-3">
                 <label for="confirm_password" class="form-label">Confirm Password</label>
                 <input 
@@ -58,9 +64,11 @@
                 >
             </div>
 
+            <!-- Submit button -->
             <button type="submit" class="btn btn-success w-100">Register</button>
         </form>
 
+        <!-- Login link -->
         <p class="mt-3 text-center">
             Already have an account? 
             <a href="{{ url_for('auth.login') }}">Login here</a>
@@ -68,15 +76,6 @@
     </div>
 </div>
 {% endblock %}
-
-
-
-
-
-
-
-
-
 
 
 

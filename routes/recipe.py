@@ -8,18 +8,19 @@ from my_extensions import db
 from datetime import datetime
 import logging
 
-# Logging
+# Set up basic logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
-# Load API keys
+# Load environment variables (e.g., API keys)
 load_dotenv()
 EDAMAM_APP_ID = os.getenv("EDAMAM_APP_ID")
 EDAMAM_APP_KEY = os.getenv("EDAMAM_APP_KEY")
 
+# Create the blueprint for recipe-related routes
 recipe_bp = Blueprint('recipe', __name__)
 
-# Search and Display Recipes
+# Route for searching and displaying recipes
 @recipe_bp.route('/', methods=['GET', 'POST'])
 @login_required
 def index():
@@ -32,7 +33,7 @@ def index():
         if not query:
             error = "Please enter a search term."
         else:
-            # Save search history
+            # Save user search to history
             try:
                 db.session.add(SearchHistory(UserId=current_user.UserId, Keywords=query))
                 db.session.commit()
@@ -40,7 +41,7 @@ def index():
                 logger.warning(f"SearchHistory save failed: {e}")
                 db.session.rollback()
 
-            # Query Edamam
+            # Prepare Edamam API request
             url = "https://api.edamam.com/search"
             params = {
                 'q': query,
@@ -54,22 +55,21 @@ def index():
                 headers = {'User-Agent': 'AllergyFreeRecipeFinder/1.0'}
                 response = requests.get(url, params=params, headers=headers, timeout=30)
 
-                # # remove this after the error of not showing recipes
-                # print("Response status code:", response.status_code)
-                # print("Response JSON:", response.json())
-
+                # Fallback to new API version if 404 error
                 if response.status_code == 404:
                     url = "https://api.edamam.com/api/recipes/v2"
-                    headers['Edamam-Account-User'] = 'b265e1fa' 
+                    headers['Edamam-Account-User'] = 'b265e1fa'
                     params['type'] = 'public'
                     response = requests.get(url, params=params, headers=headers, timeout=30)
 
+                # Parse API response
                 data = response.json()
                 hits = data.get('hits', [])
 
                 if not hits:
                     error = f"No recipes found for '{query}'. Try another keyword."
                 else:
+                    # Load current user's allergens and saved recipes
                     user_allergens = [p.Allergen.lower() for p in Preferences.query.filter_by(UserId=current_user.UserId).all()]
                     saved_recipe_ids = {sr.RecipeId for sr in SavedRecipe.query.filter_by(UserId=current_user.UserId).all()}
 
@@ -79,11 +79,14 @@ def index():
                         ingredients = recipe_data.get('ingredientLines', [])
                         ingredients_lower = [ing.lower() for ing in ingredients]
 
+                        # Skip if any ingredient contains an allergen
                         if any(allergen in ing for allergen in user_allergens for ing in ingredients_lower):
-                            continue  # Skip alll allergy recipes
+                            continue
 
+                        # Check if recipe already exists in DB
                         existing = Recipe.query.filter_by(Title=title).first()
                         if not existing:
+                            # Create new recipe entry
                             new_recipe = Recipe(
                                 Title=title,
                                 Ingredients=', '.join(ingredients),
@@ -94,6 +97,7 @@ def index():
                             db.session.add(new_recipe)
                             db.session.commit()
 
+                            # Add new ingredients if not already present
                             for ing in ingredients:
                                 ing_name = ing.strip().lower()
                                 if len(ing_name) <= 100 and not Ingredient.query.filter_by(Name=ing_name).first():
@@ -104,8 +108,10 @@ def index():
                         else:
                             recipe_id = existing.RecipeId
 
+                        # Check if user has already saved this recipe
                         is_saved = recipe_id in saved_recipe_ids
 
+                        # Append recipe info for display
                         recipes.append({
                             'id': recipe_id,
                             'title': title,
@@ -116,6 +122,7 @@ def index():
                             'is_saved': is_saved
                         })
 
+                    # If no allergy-safe recipes were found
                     if not recipes:
                         error = f"No allergy-safe recipes found!! You are allergy for '{query}'."
 
@@ -127,7 +134,7 @@ def index():
 
     return render_template("index.html", recipes=recipes, query=query, error=error)
 
-# Save/Unsave Recipe 
+# Route to save or unsave a recipe using its ID
 @recipe_bp.route('/recipes/save/<int:recipe_id>', methods=['POST'])
 @login_required
 def save_recipe_by_id(recipe_id):
@@ -145,8 +152,8 @@ def save_recipe_by_id(recipe_id):
         logger.error(f"Error saving recipe: {e}")
         db.session.rollback()
         return jsonify({'success': False, 'message': 'Server error'}), 500
-    
-    
+
+# Route to unsave a recipe directly
 @recipe_bp.route('/unsave/<int:recipe_id>', methods=['POST'])
 @login_required
 def unsave_recipe(recipe_id):
@@ -157,17 +164,14 @@ def unsave_recipe(recipe_id):
             db.session.commit()
             return jsonify({'success': True})
         else:
-            # app.logger.warning(f"SavedRecipe not found: user={current_user.UserId}, recipe={recipe_id}")
             logger.warning(f"SavedRecipe not found: user={current_user.UserId}, recipe={recipe_id}")
             return jsonify({'success': False, 'message': 'Recipe not found'}), 404
     except Exception as e:
-        # app.logger.error(f"Error unsaving recipe: {e}")
         logger.error(f"Error unsaving recipe: {e}")
         db.session.rollback()
         return jsonify({'success': False, 'message': f'Server error: {str(e)}'}), 500
 
-
-# View Saved Recipes
+# Route to view all saved recipes by the user
 @recipe_bp.route('/saved')
 @login_required
 def saved_recipes():
@@ -178,47 +182,3 @@ def saved_recipes():
         .all()
     )
     return render_template("saved_recipes.html", recipes=saved)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

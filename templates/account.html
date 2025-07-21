@@ -1,21 +1,24 @@
 {% extends "base.html" %}
 
 {% block content %}
+<!-- Page container with padding and background -->
 <div class="container" style="background-color: #f0f2f5; padding: 30px; border-radius: 12px;">
   <div class="card shadow-sm p-4" style="border-radius: 16px; background-color: #ffffff;">
     <h2 class="mb-4 text-center" style="color: #2c3e50;">My Account</h2>
 
+    <!-- Display Username -->
     <div class="mb-4">
       <label class="form-label fw-semibold" style="color: #2c3e50;">Username</label>
       <div class="text-muted" style="font-size: 1rem;">{{ username }}</div>
     </div>
 
-
+    <!-- Display Email -->
     <div class="mb-4">
       <label class="form-label fw-semibold" style="color: #2c3e50;">Email</label>
       <div class="text-muted" style="font-size: 1rem;">{{ email }}</div>
     </div>
 
+    <!-- Display Allergy Preferences -->
     <div class="mb-4">
       <label class="form-label fw-semibold" style="color: #2c3e50;">Allergy Preferences</label>
       {% if preferences %}
@@ -31,6 +34,7 @@
       {% endif %}
     </div>
 
+    <!-- Button to manage allergens -->
     <div class="text-center mt-4">
       <a href="{{ url_for('main.manage_allergens') }}" class="btn btn-primary px-4 py-2" 
          style="border-radius: 8px; background-color: #3498db; border: none;">
@@ -40,20 +44,6 @@
   </div>
 </div>
 {% endblock %}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
