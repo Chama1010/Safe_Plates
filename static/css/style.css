@@ -1,20 +1,24 @@
-.body {
+/* Set base font and background */
+.body { 
   font-family: 'Open Sans', sans-serif;
   background-color: #f8f9fa;
   padding-top: 20px;
 }
 
+/* Center content and limit width */
 .container {
   max-width: 1200px;
   margin: 0 auto;
 }
 
+/* Style for main headings */
 .h1 {
   color: #2c3e50;
   text-align: center;
   margin-bottom: 30px;
 }
 
+/* Card hover effect and animation */
 .card {
   transition: transform 0.3s;
   height: 100%;
@@ -25,21 +29,25 @@
   box-shadow: 0 10px 20px rgba(0,0,0,0.1);
 }
 
+/* Recipe image style */
 .card-img-top {
   height: 200px;
   object-fit: cover;
 }
 
+/* Title inside recipe cards */
 .card-title {
   font-weight: 600;
   color: #34495e;
 }
 
+/* Input focus effect */
 .form-control:focus {
   border-color: #6c757d;
   box-shadow: 0 0 0 0.25rem rgba(108, 117, 125, 0.25);
 }
 
+/* Primary button styling */
 .btn-primary {
   background-color: #3498db;
   border-color: #3498db;
@@ -50,11 +58,12 @@
   border-color: #2980b9;
 }
 
+/* Rounded borders for alert boxes */
 .alert {
   border-radius: 4px;
 }
 
-/* Login and Registration Forms */
+/* Centered login/register form container */
 .auth-form {
   max-width: 450px;
   margin: 0 auto;
@@ -64,18 +73,19 @@
   box-shadow: 0 4px 6px rgba(0,0,0,0.1); 
 }
 
+/* Login/Register form heading */
 .auth-form h2 {
   text-align: center;
   margin-bottom: 25px;
   color: #2c3e50;
 }
 
-/* Flash messages */
+/* Space below flash message section */
 .flash-messages {
   margin-bottom: 20px;
 }
 
-/*show more button*/
+/* Style for "show more" button inside ingredients */
 .card-text .btn-link {
   font-size: 0.85rem;
   color: #3498db;
@@ -86,11 +96,12 @@
   text-decoration: underline;
 }
 
+/* Used inside script.js to expand ingredients */
 .ingredient-text {
   display: inline;
 }
 
-/* Flash message animation */
+/* Animation to fade out flash messages */
 @keyframes fadeOut {
   0% { opacity: 1; }
   90% { opacity: 1; }
@@ -101,7 +112,7 @@
   animation: fadeOut 2s ease forwards;
 }
 
-/* Allergen Grid Styling */
+/* Grid layout for allergens */
 .allergen-grid {
   display: grid;
   grid-template-columns: repeat(10, 1fr);
@@ -110,6 +121,7 @@
   font-size: 14px;
 }
 
+/* Individual allergen item styling */
 .allergen-item {
   display: flex;
   align-items: center;
@@ -117,7 +129,7 @@
   white-space: nowrap;
 }
 
-/* Custom Navbar Styling */
+/* Custom navbar styling */
 .custom-navbar {
   background-color: #4e3d76e4;
 }
@@ -130,17 +142,3 @@
 .custom-navbar .nav-link:hover {
   color: #e0e0e0 !important;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

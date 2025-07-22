@@ -1,53 +1,55 @@
 document.addEventListener('DOMContentLoaded', function () {
-// long ingredient lists with show more and show less
-const ingredientParagraphs = document.querySelectorAll('.ingredient-paragraph');
 
-ingredientParagraphs.forEach((paragraph) => {
-  const fullText = paragraph.textContent.trim();
+  // 1. Show More / Show Less functionality for long ingredient texts
+  const ingredientParagraphs = document.querySelectorAll('.ingredient-paragraph');
 
-  if (fullText.length > 100) {
-    const shortText = fullText.substring(0, 100) + '…';
+  ingredientParagraphs.forEach((paragraph) => {
+    const fullText = paragraph.textContent.trim();
 
-    paragraph.textContent = '';
+    if (fullText.length > 100) {
+      const shortText = fullText.substring(0, 100) + '…';
+      paragraph.textContent = '';
 
-    // Create span for dynamic text
-    const span = document.createElement('span');
-    span.className = 'ingredient-text';
-    span.textContent = shortText;
-    paragraph.appendChild(span);
+      // Create a span to toggle text content
+      const span = document.createElement('span');
+      span.className = 'ingredient-text';
+      span.textContent = shortText;
+      paragraph.appendChild(span);
 
-    // show more and less toggle button
-    const toggleBtn = document.createElement('button');
-    toggleBtn.className = 'btn btn-sm btn-link p-0 mt-1';
-    toggleBtn.type = 'button';
-    toggleBtn.textContent = 'Show More';
+      // Add toggle button
+      const toggleBtn = document.createElement('button');
+      toggleBtn.className = 'btn btn-sm btn-link p-0 mt-1';
+      toggleBtn.type = 'button';
+      toggleBtn.textContent = 'Show More';
 
-    let expanded = false;
+      let expanded = false;
 
-    toggleBtn.addEventListener('click', () => {
-      expanded = !expanded;
-      span.textContent = expanded ? fullText : shortText;
-      toggleBtn.textContent = expanded ? 'Show Less' : 'Show More';
-    });
+      toggleBtn.addEventListener('click', () => {
+        expanded = !expanded;
+        span.textContent = expanded ? fullText : shortText;
+        toggleBtn.textContent = expanded ? 'Show Less' : 'Show More';
+      });
 
-    paragraph.appendChild(document.createElement('br'));
-    paragraph.appendChild(toggleBtn);
-  }
-});
+      paragraph.appendChild(document.createElement('br'));
+      paragraph.appendChild(toggleBtn);
+    }
+  });
 
-// fade in animation for recipe cards
+  // 2. Fade-in animation for recipe cards on page load
   const recipeCards = document.querySelectorAll('.card');
   recipeCards.forEach((card, index) => {
     card.style.opacity = '0';
     card.style.transform = 'translateY(10px)';
     card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+
+    // Delay each card slightly
     setTimeout(() => {
       card.style.opacity = '1';
       card.style.transform = 'translateY(0)';
     }, 100 * index);
   });
 
-  // prevent empty search submissions
+  // 3. Prevent form submission if search input is empty
   const searchForm = document.querySelector('form');
   if (searchForm) {
     searchForm.addEventListener('submit', function (event) {
@@ -59,7 +61,7 @@ ingredientParagraphs.forEach((paragraph) => {
     });
   }
 
-  // save recipe
+  // 4. Save/Unsave recipe (AJAX)
   const saveButtons = document.querySelectorAll('.save-btn');
   saveButtons.forEach(btn => {
     btn.addEventListener('click', async () => {
@@ -71,6 +73,7 @@ ingredientParagraphs.forEach((paragraph) => {
         headers: { 'X-Requested-With': 'XMLHttpRequest' }
       });
 
+      // Toggle button style and text on success
       if (response.ok) {
         const data = await response.json();
         btn.classList.toggle('btn-success', data.saved);
@@ -82,7 +85,7 @@ ingredientParagraphs.forEach((paragraph) => {
     });
   });
 
-  // remove recipe from saved recipes 
+  // 5. Unsave recipe from "Saved Recipes" page (AJAX)
   const unsaveButtons = document.querySelectorAll('.unsave-btn');
   unsaveButtons.forEach(btn => {
     btn.addEventListener('click', async () => {
@@ -92,6 +95,7 @@ ingredientParagraphs.forEach((paragraph) => {
         headers: { 'X-Requested-With': 'XMLHttpRequest' }
       });
 
+      // Remove recipe card from page if successful
       if (response.ok) {
         const card = btn.closest('.col'); 
         if (card) card.remove();
@@ -100,19 +104,5 @@ ingredientParagraphs.forEach((paragraph) => {
       }
     });
   });
+
 });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
